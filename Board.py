@@ -1,6 +1,9 @@
+from Pieces import Piece
+
+
 class Board:
-    ROWS = 10
-    COLS = 10
+    ROWS = 5
+    COLS = 5
     GAME_BOARD = [[None] * 2 * COLS] * 2 * ROWS
 
     def __init__(self):
@@ -14,14 +17,32 @@ class Board:
 
         for i in range(Board.ROWS):
             for j in range(Board.COLS):
-                #if i % 2 == 0:
-                 #   pass
-                res += "/" + 2 * " " + "\\" + 2 * "_"
+                piece_label = "  "
+
+                if (i % 2 == 0 and j % 2 == 0) or (i % 2 == 0 and j % 2 == 0):
+                    piece = Board.GAME_BOARD[i][j]
+                    if piece is None:
+                        piece_label = "N "
+                    # elif isinstance(piece, Piece):
+                    # piece_label = piece.name[0] + piece.color
+                    # pass
+
+                res += "/" + piece_label + "\\" + 2 * "_"
 
             res += "\n"
 
             for j in range(Board.COLS):
-                res += "\\" + 2 * "_" + "/" + 2 * " "
+                piece_label = "  "
+
+                if (i % 2 == 0 and j % 2 == 0) or (i % 2 == 0 and j % 2 == 0):
+                    piece = Board.GAME_BOARD[i][j]
+                    if piece is None:
+                        piece_label = "N "
+                    # elif isinstance(piece, Piece):
+                    # piece_label = piece.name[0] + piece.color
+                    # pass
+                res += "\\" + 2 * "_" + "/" + piece_label
+
             res += "\n"
 
         return res
