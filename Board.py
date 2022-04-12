@@ -2,13 +2,13 @@ from Pieces import Piece
 
 
 class Board:
-    ROWS = 6
+    ROWS = 5
     COLS = 5
-    GAME_BOARD = [[None] * 2 * COLS] * 2 * ROWS
+    GAME_BOARD = []
 
     def __init__(self):
-        # This part is written just for testing...
-        # Board.GAME_BOARD[0][0] = 1
+        for i in range(2 * Board.ROWS):
+            Board.GAME_BOARD.append([None] * 2 * Board.COLS)
         pass
 
     def __str__(self):
@@ -24,8 +24,8 @@ class Board:
                 piece = Board.GAME_BOARD[2 * i][2 * j]
                 if piece is None:
                     piece_label = "NON"
-                elif isinstance(piece, Piece):
-                    piece_label = piece.name[0] + piece.color
+                # elif isinstance(piece, Piece):
+                #    piece_label = piece.name[0] + piece.color
 
                 res += "/" + piece_label + "\\" + 3 * "_"
 
@@ -37,8 +37,8 @@ class Board:
                 piece = Board.GAME_BOARD[2 * i + 1][2 * j + 1]
                 if piece is None:
                     piece_label = "NON"
-                elif isinstance(piece, Piece):
-                    piece_label = piece.name[0] + piece.color
+                # elif isinstance(piece, Piece):
+                #    piece_label = piece.name[0] + piece.color
 
                 res += "\\" + 3 * "_" + "/" + piece_label
 
@@ -56,5 +56,7 @@ class Board:
 
 # -------------------------------
 b = Board()
+b.GAME_BOARD[0][0] = 9
+print(b.GAME_BOARD[0][0])
 print(b)
 print(repr(b))
