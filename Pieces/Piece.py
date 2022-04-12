@@ -2,10 +2,11 @@ from Board import Board
 
 
 class Piece:
-    def __init__(self):
+    def __init__(self, color):
         self.name = "piece"
         self.number_of_pieces = -1
         self.pos = {"x": -1, "y": -1}
+        self.color = color
 
     def place(self, x, y):
         self.pos = {"x": x, "y": y}
