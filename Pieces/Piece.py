@@ -1,4 +1,4 @@
-from Board import Board
+# from ..Board import Board
 
 
 class Piece:
@@ -7,7 +7,7 @@ class Piece:
         self.number_of_pieces = -1
         self.pos = {"x": -1, "y": -1}
         self.color = color
-
+'''
     def place(self, x, y):
         self.pos = {"x": x, "y": y}
 
@@ -28,3 +28,4 @@ class Piece:
 
     def get_se(self):
         return Board.GAME_BOARD[self.pos["x"] - 1][self.pos["y"] + 1]
+'''
