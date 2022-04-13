@@ -1,4 +1,14 @@
 from Pieces import Piece
+# TODO: classify colors
+Black = '\u001b[30m'
+Red = '\u001b[31m'
+Green = '\u001b[32m'
+Yellow = '\u001b[33m'
+Blue = '\u001b[34m'
+Magenta = '\u001b[35m'
+Cyan = '\u001b[36m'
+White = '\u001b[37m'
+Normal = '\u001b[0m'
 
 
 class Board:
@@ -11,7 +21,8 @@ class Board:
             Board.GAME_BOARD.append([None] * 2 * Board.COLS)
         pass
 
-    def __str__(self):
+    def __str__(self, **kwargs):
+        select_list = kwargs.get('selects', [])
         res = " "
         for j in range(Board.COLS):
             res += 3 * "_" + 5 * " "
@@ -22,8 +33,11 @@ class Board:
                 piece_label = 3 * " "
 
                 piece = Board.GAME_BOARD[2 * i][2 * j]
-                if piece is None:
+                if piece is None and (i, j) in select_list:
+                    piece_label = Red + "NON" + Normal
+                elif piece is None:
                     piece_label = "NON"
+
                 # elif isinstance(piece, Piece):
                 #    piece_label = piece.name[0] + piece.color
 
@@ -55,8 +69,9 @@ class Board:
 
 
 # -------------------------------
-b = Board()
-b.GAME_BOARD[0][0] = 9
-print(b.GAME_BOARD[0][0])
-print(b)
-print(repr(b))
+if __name__ == '__main__':
+    b = Board()
+    b.GAME_BOARD[0][0] = 9
+    print(b.GAME_BOARD[0][0])
+    print(b.__str__(selects=[(2, 3), (0, 4)]))
+    # print(repr(b))
