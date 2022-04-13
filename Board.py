@@ -1,14 +1,16 @@
 from Pieces import Piece
-# TODO: classify colors
-Black = '\u001b[30m'
-Red = '\u001b[31m'
-Green = '\u001b[32m'
-Yellow = '\u001b[33m'
-Blue = '\u001b[34m'
-Magenta = '\u001b[35m'
-Cyan = '\u001b[36m'
-White = '\u001b[37m'
-Normal = '\u001b[0m'
+
+colors = {
+    'Black': '\u001b[30m',
+    'Red': '\u001b[31m',
+    'Green': '\u001b[32m',
+    'Yellow': '\u001b[33m',
+    'Blue': '\u001b[34m',
+    'Magenta': '\u001b[35m',
+    'Cyan': '\u001b[36m',
+    'White': '\u001b[37m',
+    'Normal': '\u001b[0m',
+}
 
 
 class Board:
@@ -22,7 +24,7 @@ class Board:
         pass
 
     def __str__(self, **kwargs):
-        select_list = kwargs.get('selects', [])
+        selects = kwargs.get('selects', {})
         res = " "
         for j in range(Board.COLS):
             res += 3 * "_" + 5 * " "
@@ -33,8 +35,10 @@ class Board:
                 piece_label = 3 * " "
 
                 piece = Board.GAME_BOARD[2 * i][2 * j]
-                if piece is None and (i, j) in select_list:
-                    piece_label = Red + "NON" + Normal
+                if piece is None and (i, j) in selects.keys():
+                    color_name = selects.get((i, j))
+                    color = colors.get(color_name)
+                    piece_label = color + "NON" + colors.get('Normal')
                 elif piece is None:
                     piece_label = "NON"
 
@@ -73,5 +77,5 @@ if __name__ == '__main__':
     b = Board()
     b.GAME_BOARD[0][0] = 9
     print(b.GAME_BOARD[0][0])
-    print(b.__str__(selects=[(2, 3), (0, 4)]))
+    print(b.__str__(selects={(2, 3): 'Red', (0, 4): 'Blue'}))
     # print(repr(b))
