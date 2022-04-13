@@ -59,8 +59,8 @@ class Board:
                 piece = self.GAME_BOARD[2 * i + 1][2 * j + 1]
                 if piece is None:
                     piece_label = "NON"
-                # elif isinstance(piece, Piece):
-                #    piece_label = piece.name[0] + piece.color
+                elif isinstance(piece, Piece):
+                    piece_label = piece.name[0] + "-" + piece.color
 
                 res += "\\" + 3 * "_" + "/" + piece_label
 
