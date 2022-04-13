@@ -17,13 +17,12 @@ class Board:
     ROWS = 5
     COLS = 5
 
-    # {tuple Piece -> player}
-
     def __init__(self):
         self.GAME_BOARD = []
-        self.full_positions = {}
         for i in range(2 * Board.ROWS):
             self.GAME_BOARD.append([None] * 2 * Board.COLS)
+
+        self.full_positions = {}  # {tuple Piece -> player}
 
     def __str__(self, **kwargs):
         selects = kwargs.get('selects', {})
@@ -45,9 +44,8 @@ class Board:
                     piece_label = color + "NON" + colors.get('Normal')
                 elif piece is None:
                     piece_label = "NON"
-
-                # elif isinstance(piece, Piece):
-                #    piece_label = piece.name[0] + piece.color
+                elif isinstance(piece, Piece):
+                    piece_label = piece.name[0] + "-" + piece.color
 
                 res += "/" + piece_label + "\\" + 3 * "_"
 
@@ -111,7 +109,7 @@ class Board:
 # -------------------------------
 if __name__ == '__main__':
     b = Board()
-    b.GAME_BOARD[1][1] = 9
+    b.GAME_BOARD[1][1] = Piece("w")
     print(b.GAME_BOARD[0][0])
     print(b.__str__(selects={(2, 3): 'Red', (0, 4): 'Blue'}))
-    # print(repr(b))
+    print(repr(b))
