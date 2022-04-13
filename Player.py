@@ -2,7 +2,7 @@ import Pieces.QueenBee
 
 
 class Player:
-    def __init__(self, name):
+    def __init__(self, name, color):
         self.name = name
         self.pieces = [Pieces] * 6
         self.pieces = {
@@ -12,5 +12,7 @@ class Player:
             'G': 3,
             'A': 3,
         }
+        self.turn = 0
         self.is_won = False
         self.score = 0
+        self.color = color

@@ -45,7 +45,7 @@ class Board:
                 elif piece is None:
                     piece_label = "NON"
                 elif isinstance(piece, Piece):
-                    piece_label = piece.name[0] + "-" + piece.color
+                    piece_label = piece.name[0] + "-" + piece.color[0]
 
                 res += "/" + piece_label + "\\" + 3 * "_"
 
@@ -58,7 +58,7 @@ class Board:
                 if piece is None:
                     piece_label = "NON"
                 elif isinstance(piece, Piece):
-                    piece_label = piece.name[0] + "-" + piece.color
+                    piece_label = piece.name[0] + "-" + piece.color[0]
 
                 res += "\\" + 3 * "_" + "/" + piece_label
 

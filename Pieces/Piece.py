@@ -7,6 +7,7 @@ class Piece:
         self.board = None
         self.player = None
 
+
     def place(self, x, y):
         self.pos = {"x": x, "y": y}
 
@@ -38,3 +39,7 @@ class Piece:
             'sw': self.get_sw() if self.get_sw() is not None else (self.pos["x"] + 1, self.pos["y"] - 1),
             'se': self.get_se() if self.get_se() is not None else (self.pos["x"] + 1, self.pos["y"] + 1),
         }
+
+    def move(self):
+        pass
+

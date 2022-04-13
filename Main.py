@@ -7,8 +7,8 @@ from Player import Player
 from Pieces.QueenBee import QueenBee
 
 turn = 0
-p1 = Player("P1")
-p2 = Player("P2")
+p1 = Player("P1", "White")
+p2 = Player("P2", "Black")
 board = Board()
 # TODO: refactor these
 while True:
