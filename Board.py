@@ -14,8 +14,8 @@ colors = {
 
 
 class Board:
-    ROWS = 5
-    COLS = 5
+    ROWS = 10
+    COLS = 10
 
     def __init__(self):
         self.GAME_BOARD = []
