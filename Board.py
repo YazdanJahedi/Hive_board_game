@@ -44,7 +44,7 @@ class Board:
                 #     color = colors.get(color_name)
                 #     piece_label = color + "NON" + colors.get('Normal')
                 if piece is None:
-                    piece_label = "NON"
+                    piece_label = "   "
                 elif isinstance(piece, Piece):
                     piece_label = piece.name[0] + "-" + piece.color[0]
 
@@ -57,7 +57,7 @@ class Board:
 
                 piece = self.GAME_BOARD[2 * i + 1][2 * j + 1]
                 if piece is None:
-                    piece_label = "NON"
+                    piece_label = "   "
                 elif isinstance(piece, Piece):
                     piece_label = piece.name[0] + "-" + piece.color[0]
 
@@ -83,28 +83,32 @@ class Board:
         return res
 
     def get_possible_insertions(self, player):
+        possible_set = set()  # set of tuples of positions
         if len(self.full_positions) == 0:
-            return {(self.ROWS - 1, self.COLS - 1)}
-        if len(self.full_positions) == 1:
-            return set(k for k in list(self.full_positions.keys())[0].get_neighbors().values() if k is not None)
-        output = set()  # set of tuples of positions
-        for piece, _ in self.full_positions.items():
-            neighbors = piece.get_neighbors()
-            for neighbor in neighbors.values():
-                # neighbor is tuple of x,y if None else Piece
-                if isinstance(neighbor, Piece):
-                    continue
-                if neighbor == "ERROR":
-                    continue
-                fake_piece = Piece('')
-                fake_piece.pos['x'] = neighbor[0]
-                fake_piece.pos['y'] = neighbor[1]
-                fake_piece.board = self
-                if isinstance(neighbor[0], str):
-                    print()
-                if not self.contains_enemy(fake_piece.get_neighbors().values(), player):
-                    output.add(neighbor)
-        return output
+            possible_set.add((self.ROWS - 1, self.COLS - 1))
+        elif len(self.full_positions) == 1:
+            possible_set = set(k for k in list(self.full_positions.keys())[0].get_neighbors().values() if k is not None)
+        else:
+            for piece, _ in self.full_positions.items():
+                neighbors = piece.get_neighbors()
+                for neighbor in neighbors.values():
+                    # neighbor is tuple of x,y if None else Piece
+                    if isinstance(neighbor, Piece):
+                        continue
+                    if neighbor == "ERROR":
+                        continue
+                    fake_piece = Piece('')
+                    fake_piece.pos['x'] = neighbor[0]
+                    fake_piece.pos['y'] = neighbor[1]
+                    fake_piece.board = self
+                    if isinstance(neighbor[0], str):
+                        print()
+                    if not self.contains_enemy(fake_piece.get_neighbors().values(), player):
+                        possible_set.add(neighbor)
+        copy_of_Board = self.GAME_BOARD.copy()
+        for x, y in possible_set:
+            copy_of_Board[x][y] = 1
+        return copy_of_Board
 
     def add_piece(self, pos, piece, color):
         self.GAME_BOARD[pos[0]][pos[1]] = piece
