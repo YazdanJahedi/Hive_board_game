@@ -103,7 +103,7 @@ class Board:
                     fake_piece.board = self
                     if isinstance(neighbor[0], str):
                         print()
-                    if not self.contains_enemy(fake_piece.get_neighbors().values(), player):
+                    if not self.contains_enemy(Board.get_neighbours(fake_piece.pos).values(), player):
                         possible_set.add(neighbor)
         copy_of_Board = self.GAME_BOARD.copy()
         for x, y in possible_set:
