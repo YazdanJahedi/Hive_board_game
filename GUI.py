@@ -41,6 +41,7 @@ def show_board():
             # default image of each cell
             cell_image = pygame.image.load("images/Hexagonal.png")
 
+            # TODO: this part need a serious refactoring :))))
             if i % 2 == 0:
                 if board[i][2 * j] == 1:
                     cell_image = pygame.image.load("images/Hexagonal_blue.png")
@@ -55,7 +56,34 @@ def show_board():
             current_x += (3 / 2) * cell_width
         current_y += cell_height / 2
 
+def show_pieces():
+    # load image
+    queen_bee_white = pygame.image.load("images/queen_bee_white.png")
+    screen.blit(queen_bee_white, (,))
+    queen_bee_black = pygame.image.load("images/queen_bee_black.png")
+    screen.blit(queen_bee_white, (,))
 
+    spider_white = pygame.image.load("images/spider_white.png")
+    screen.blit(queen_bee_white, (,))
+    spider_black = pygame.image.load("images/spider_black.png")
+    screen.blit(queen_bee_white, (,))
+
+    ant_white = pygame.image.load("images/ant_white.png")
+    screen.blit(queen_bee_white, (,))
+    ant_black = pygame.image.load("images/ant_black.png")
+    screen.blit(queen_bee_white, (,))
+
+    grasshopper_white = pygame.image.load("images/grasshopper_white.png")
+    screen.blit(queen_bee_white, (,))
+    grasshopper_black = pygame.image.load("images/grasshopper_black.png")
+    screen.blit(queen_bee_white, (,))
+
+    insect_white = pygame.image.load("images/insect_white.png")
+    screen.blit(queen_bee_white, (,))
+    insect_black = pygame.image.load("images/insect_black.png")
+    screen.blit(queen_bee_white, (,))
+
+    pass
 # -------------------------------
 # Event loop
 running = True
@@ -69,4 +97,5 @@ while running:
             running = False
 
     show_board()
+    show_pieces()
     pygame.display.update()
