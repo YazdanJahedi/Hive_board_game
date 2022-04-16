@@ -38,7 +38,16 @@ def show_board():
 
         for j in range(board_cols):
             # loading image
+            # default image of each cell
             cell_image = pygame.image.load("images/Hexagonal.png")
+
+            if i % 2 == 0:
+                if board[i][2 * j] == 1:
+                    cell_image = pygame.image.load("images/Hexagonal_blue.png")
+            else:
+                if board[i][2 * j + 1] == 1:
+                    cell_image = pygame.image.load("images/Hexagonal_blue.png")
+
 
             # Scale the image
             cell_image = pygame.transform.scale(cell_image, DEFAULT_CELL_SIZE)
