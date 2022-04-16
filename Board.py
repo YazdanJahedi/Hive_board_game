@@ -16,9 +16,9 @@ colors = {
 class Board:
     ROWS = 5
     COLS = 5
+    GAME_BOARD = []
 
     def __init__(self):
-        self.GAME_BOARD = []
         for i in range(2 * Board.ROWS):
             self.GAME_BOARD.append([None] * 2 * Board.COLS)
 
@@ -110,11 +110,68 @@ class Board:
         self.GAME_BOARD[pos[0]][pos[1]] = piece
         self.full_positions[piece] = color
 
-    def is_position_in_board(self, position):
-        return 0 <= position[0] < self.ROWS * 2 and 0 <= position[1] < self.COLS * 2
+    @staticmethod
+    def is_position_in_board(pos):
+        return 0 <= pos["x"] < 2 * Board.ROWS and 0 <= pos["y"] < 2 * Board.COLS
+
+    # -------------- GET NEIGHBOUR CELL METHODS -----------------
+
+    # get_n method, gets a position(coordinate) as argument and returns the northern cell on the board
+    @staticmethod
+    def get_n(pos):
+        if Board.is_position_in_board((pos["x"] - 2, pos["y"])):
+            return Board.GAME_BOARD[pos["x"] - 2][pos["y"]]
+        return "ERROR"
+
+    # get_s method, gets a position(coordinate) as argument and returns the southern cell on the board
+    @staticmethod
+    def get_s(pos):
+        if Board.is_position_in_board((pos["x"] + 2, pos["y"])):
+            return Board.GAME_BOARD[pos["x"] + 2][pos["y"]]
+        return "ERROR"
+
+    # get_nw method, gets a position(coordinate) as argument and returns the cell in the north west
+    @staticmethod
+    def get_nw(pos):
+        if Board.is_position_in_board((pos["x"] - 1, pos["y"] - 1)):
+            return Board.GAME_BOARD[pos["x"] - 1][pos["y"] - 1]
+        return "ERROR"
+
+    # get_ne method, gets a position(coordinate) as argument and returns the cell in the north east
+    @staticmethod
+    def get_ne(pos):
+        if Board.is_position_in_board((pos["x"] - 1, pos["y"] + 1)):
+            return Board.GAME_BOARD[pos["x"] - 1][pos["y"] + 1]
+        return "ERROR"
+
+    # get_sw method, gets a position(coordinate) as argument and returns the cell in the south west
+    @staticmethod
+    def get_sw(pos):
+        if Board.is_position_in_board((pos["x"] + 1, pos["y"] - 1)):
+            return Board.GAME_BOARD[pos["x"] + 1][pos["y"] - 1]
+        return "ERROR"
+
+    # get_se method, gets a position(coordinate) as argument and returns the cell in the south east
+    @staticmethod
+    def get_se(pos):
+        if Board.is_position_in_board((pos["x"] + 1, pos["y"] + 1)):
+            return Board.GAME_BOARD[pos["x"] + 1][pos["y"] + 1]
+        return "ERROR"
+
+    # get_neighbour method, gets a position(coordinate) as argument and returns all of cell's neighbours as a dictionary
+    @staticmethod
+    def get_neighbours(pos):
+        return {
+            'n': Board.get_n(pos) if Board.get_n(pos) is not None else (pos["x"] - 2, pos["y"]),
+            'w': Board.get_s(pos) if Board.get_s(pos) is not None else (pos["x"] + 2, pos["y"]),
+            'nw': Board.get_nw(pos) if Board.get_nw(pos) is not None else (pos["x"] - 1, pos["y"] - 1),
+            'ne': Board.get_ne(pos) if Board.get_ne(pos) is not None else (pos["x"] - 1, pos["y"] + 1),
+            'sw': Board.get_sw(pos) if Board.get_sw(pos) is not None else (pos["x"] + 1, pos["y"] - 1),
+            'se': Board.get_se(pos) if Board.get_se(pos) is not None else (pos["x"] + 1, pos["y"] + 1),
+        }
+    # -----------------------------------------------
 
 
-# -------------------------------
 if __name__ == '__main__':
     b = Board()
     b.GAME_BOARD[1][1] = Piece("w")
