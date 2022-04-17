@@ -1,8 +1,14 @@
 import pygame
 
 from Board import Board
+from Pieces.Ant import Ant
 
 # Initialise pygame
+from Pieces.Beetle import Beetle
+from Pieces.Grasshopper import Grasshopper
+from Pieces.QueenBee import QueenBee
+from Pieces.Spider import Spider
+
 pygame.init()
 
 # Set screen size
@@ -26,7 +32,9 @@ current_x = 0
 current_y = 0
 
 
-def show_board():
+def show_board(x, y):
+    is_an_image_clicked = False
+
     global current_y, current_x
     current_x = 0
     current_y = 0
@@ -41,24 +49,73 @@ def show_board():
             # default image of each cell
             cell_image = pygame.image.load("images/Hexagonal.png")
 
-            # TODO: this part need a serious refactoring :))))
+            # ------------ select correct image for each element -----------
+            element = None
             if i % 2 == 0:
-                if board[i][2 * j] == 1:
-                    cell_image = pygame.image.load("images/Hexagonal_blue.png")
+                element = board[i][2 * j]
             else:
-                if board[i][2 * j + 1] == 1:
-                    cell_image = pygame.image.load("images/Hexagonal_blue.png")
+                element = board[i][2 * j + 1]
+
+            if element == 1:
+                cell_image = pygame.image.load("images/Hexagonal_blue.png")
+            elif isinstance(element, Ant):
+                if element.color == 'w':
+                    cell_image = pygame.image.load("images/ant_white.png")
+                else:
+                    cell_image = pygame.image.load("images/ant_black.png")
+            elif isinstance(element, Beetle):
+                if element.color == 'w':
+                    cell_image = pygame.image.load("images/insect_white.png")
+                else:
+                    cell_image = pygame.image.load("images/insect_black.png")
+            elif isinstance(element, Grasshopper):
+                if element.color == 'w':
+                    cell_image = pygame.image.load("images/grasshopper_white.png")
+                else:
+                    cell_image = pygame.image.load("images/grasshopper_black.png")
+            elif isinstance(element, QueenBee):
+                if element.color == 'w':
+                    cell_image = pygame.image.load("images/queen_bee_white.png")
+                else:
+                    cell_image = pygame.image.load("images/queen_bee_black.png")
+            elif isinstance(element, Spider):
+                if element.color == 'w':
+                    cell_image = pygame.image.load("images/spider_white.png")
+                else:
+                    cell_image = pygame.image.load("images/spider_black.png")
+            # -------------------------------------------------------------------
 
             # Scale the image
             cell_image = pygame.transform.scale(cell_image, DEFAULT_CELL_SIZE)
             screen.blit(cell_image, (current_x, current_y))
+
+            if cell_image.get_rect().collidepoint(x, y):
+                print(" ~~~~")
+                is_an_image_clicked = True
+
             current_x += (3 / 2) * cell_width
         current_y += cell_height / 2
+
+    if is_an_image_clicked:
+        print("** clicked on cell at ", x, y)
 
 
 # index: queen_bee  /  spider  /  ant  /  grasshopper  /  beetle
 white_pieces_image = []
 black_pieces_image = []
+
+'''
+def is_clicked_on_pieces(x, y):
+    for i in white_pieces_image:
+        if i.get_rect().collidepoint(x, y):
+            print("     White Piece", i)
+            break
+
+    for i in black_pieces_image:
+        if i.get_rect().collidepoint(x, y):
+            print("     Black Piece", i)
+            break
+'''
 
 
 def init_pieces_image():
@@ -127,12 +184,19 @@ running = True
 while running:
     # Background Color
     screen.fill((200, 230, 255))
+    x, y = (-10, -10)
 
     for event in pygame.event.get():
         # Close window event
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = event.pos
+            # print("clicked on ", x, y)
+        if event.type == pygame.MOUSEBUTTONUP:
+            x, y = event.pos
+            # print("mouse released on  ", x, y)
 
-    show_board()
+    show_board(x, y)
     show_pieces()
     pygame.display.update()
