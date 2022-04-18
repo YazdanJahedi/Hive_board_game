@@ -113,6 +113,16 @@ class Board:
     def is_position_in_board(self, position):
         return 0 <= position[0] < self.ROWS * 2 and 0 <= position[1] < self.COLS * 2
 
+    def move(self, piece, destination):
+        source_x, source_y = piece.pos.values()
+        dest_x, dest_y = destination
+        self.GAME_BOARD[dest_x][dest_y] = piece
+        piece.pos = {
+            'x': dest_x,
+            'y': dest_y
+        }
+        self.GAME_BOARD[source_x][source_y] = None
+
 
 # -------------------------------
 if __name__ == '__main__':
