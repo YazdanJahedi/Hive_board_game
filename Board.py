@@ -14,15 +14,23 @@ colors = {
 
 
 class Board:
-    ROWS = 5
-    COLS = 5
+    ROWS = 10
+    COLS = 10
+    GAME_BOARD = []
 
     def __init__(self):
-        self.GAME_BOARD = []
         for i in range(2 * Board.ROWS):
-            self.GAME_BOARD.append([None] * 2 * Board.COLS)
+            Board.GAME_BOARD.append([None] * 2 * Board.COLS)
 
         self.full_positions = {}  # {tuple Piece -> player}
+
+        # THIS IS JUST FOR TESTING THE BOARD CLASS
+        Board.GAME_BOARD[0][0] = 1
+        Board.GAME_BOARD[0][2] = 1
+        Board.GAME_BOARD[0][4] = 1
+        Board.GAME_BOARD[1][1] = 1
+        Board.GAME_BOARD[1][3] = 1
+        Board.GAME_BOARD[1][5] = 1
 
     def __str__(self, **kwargs):
         # TODO: remove colored print
@@ -127,7 +135,5 @@ class Board:
 # -------------------------------
 if __name__ == '__main__':
     b = Board()
-    b.GAME_BOARD[1][1] = Piece("w")
-    print(b.GAME_BOARD[0][0])
     print(b.__str__(selects={(2, 3): 'Red', (0, 4): 'Blue'}))
     print(repr(b))
