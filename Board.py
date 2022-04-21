@@ -119,6 +119,9 @@ class Board:
             'x': dest_x,
             'y': dest_y
         }
+        self.full_positions[dest_x][dest_y] = piece
+        if self.GAME_BOARD[source_x][source_y] is None:
+            del self.full_positions[source_x][source_y]
 
 
 # -------------------------------
