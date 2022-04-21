@@ -1,18 +1,5 @@
 from Pieces.Piece import Piece
 
-colors = {
-    'Black': '\u001b[30m',
-    'Red': '\u001b[31m',
-    'Green': '\u001b[32m',
-    'Yellow': '\u001b[33m',
-    'Blue': '\u001b[34m',
-    'Magenta': '\u001b[35m',
-    'Cyan': '\u001b[36m',
-    'White': '\u001b[37m',
-    'Normal': '\u001b[0m',
-}
-
-
 class Board:
     ROWS = 10
     COLS = 10
