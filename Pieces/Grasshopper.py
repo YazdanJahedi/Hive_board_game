@@ -2,6 +2,11 @@ from Pieces.Piece import Piece
 
 
 class Grasshopper(Piece):
+
+    def __init__(self, color):
+        super(Grasshopper, self).__init__(color)
+        self.name = 'G'
+
     def possible_movements(self):
         output = set()
 

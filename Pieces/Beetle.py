@@ -4,8 +4,9 @@ from Pieces.Piece import Piece
 class Beetle(Piece):
 
     def __init__(self, color):
-        super().__init__(color)
-        self.under_piece = None
+        super(Beetle, self).__init__(color)
+        self.name = 'B'
 
     def possible_movements(self):
-        return self.get_neighbors().items()
+        return {neighbor if isinstance(neighbor, tuple) else tuple(neighbor.pos.values())
+                for neighbor in filter(lambda x: not isinstance(x, str), self.get_neighbors().values())}

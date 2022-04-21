@@ -9,6 +9,7 @@ class Piece:
         self.color = color
         self.board = None
         self.player = None
+        self.bottom = None
 
     def place(self, x, y):
         self.pos = {"x": x, "y": y}
@@ -82,7 +83,8 @@ class Piece:
             fake.pos = {'x': neighbor[0], 'y': neighbor[1]}
             fake.board = self.board
             not_null_neighbors = \
-                reduce(lambda before, n: before + [n] if isinstance(n,Piece) else before, fake.get_neighbors().values(), [])
+                reduce(lambda before, n: before + [n] if isinstance(n, Piece) else before,
+                       fake.get_neighbors().values(), [])
             if len(not_null_neighbors) == 1:
                 temp = not_null_neighbors.pop()
                 if temp.pos['x'] != base_piece.pos['x'] or temp.pos['y'] != base_piece.pos['y']:
@@ -92,9 +94,38 @@ class Piece:
 
         return output
 
-    def possible_movements(self):
-        pass
+    def get_not_null_neighbors(self):
+        return filter(lambda x: isinstance(x, Piece), self.get_neighbors().values())
 
     def move(self):
         pass
 
+
+def is_valid_slipping(self, src_pos, dst_pos):
+    if dst_pos[0] - src_pos[0] == 2 and dst_pos[1] == src_pos[1]:
+        # V
+        if self.board.GAME_BOARD[dst_pos[0] - 1][dst_pos[1] - 1] and self.board.GAME_BOARD[dst_pos[0] - 1][
+            dst_pos[1] + 1]:
+            return False
+    if dst_pos[0] - src_pos[0] == -2 and dst_pos[1] == src_pos[1]:
+        # ^
+        if self.board.GAME_BOARD[dst_pos[0] + 1][dst_pos[1] + 1] and self.board.GAME_BOARD[dst_pos[0] + 1][
+            dst_pos[1] - 1]:
+            return False
+    if dst_pos[0] - src_pos[0] == -1 and dst_pos[1] - src_pos[1] == -1:
+        # '\
+        if self.board.GAME_BOARD[dst_pos[0] + 2][dst_pos[1]] and self.board.GAME_BOARD[dst_pos[0] - 1][dst_pos[1] + 1]:
+            return False
+    if dst_pos[0] - src_pos[0] == +1 and dst_pos[1] - src_pos[1] == +1:
+        # \.
+        if self.board.GAME_BOARD[dst_pos[0] - 2][dst_pos[1]] and self.board.GAME_BOARD[dst_pos[0] - 1][dst_pos[1] - 1]:
+            return False
+    if dst_pos[0] - src_pos[0] == +1 and dst_pos[1] - src_pos[1] == -1:
+        # ./
+        if self.board.GAME_BOARD[dst_pos[0] - 2][dst_pos[1]] and self.board.GAME_BOARD[dst_pos[0] + 1][dst_pos[1] + 1]:
+            return False
+    if dst_pos[0] - src_pos[0] == +1 and dst_pos[1] - src_pos[1] == -1:
+        # /'
+        if self.board.GAME_BOARD[src_pos[0] - 2][src_pos[1]] and self.board.GAME_BOARD[src_pos[0] + 1][src_pos[1] + 1]:
+            return False
+    return True
