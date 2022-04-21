@@ -109,16 +109,24 @@ class Board:
     def move(self, piece, destination, to_test_move):
         source_x, source_y = piece.pos.values()
         dest_x, dest_y = destination
+        self.GAME_BOARD[source_x][source_y] = piece.bottom
         if not to_test_move:
-            self.GAME_BOARD[source_x][source_y] = piece.bottom
             if self.GAME_BOARD[dest_x][dest_y]:
                 piece.bottom = self.GAME_BOARD[dest_x][dest_y]
-        self.GAME_BOARD[dest_x][dest_y] = piece
+        if not to_test_move:
+            self.GAME_BOARD[dest_x][dest_y] = piece
+        else:
+            self.GAME_BOARD[dest_x][dest_y] = Piece('')
+            self.GAME_BOARD[dest_x][dest_y].pos = {
+                'x': dest_x,
+                'y': dest_y
+            }
         if not to_test_move:
             piece.pos = {
                 'x': dest_x,
                 'y': dest_y
             }
+
         # self.full_positions[dest_x][dest_y] = piece
         # if self.GAME_BOARD[source_x][source_y] is None:
         #     del self.full_positions[source_x][source_y]
@@ -142,8 +150,8 @@ class Board:
                 if n not in visited:
                     visited.add(n)
                     open_list.append(n)
-        # print("nodes count: ", len(temp_board.full_positions.values()))
-        # print("visited: ", len(visited))
+        print("nodes count: ", len(temp_board.full_positions.values()))
+        print("visited: ", len(visited))
         return len(visited) == len(temp_board.full_positions.values())
 
 

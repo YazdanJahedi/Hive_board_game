@@ -21,7 +21,7 @@ while True:
     if command == 'insert':
         print('You have these pieces:')
         print(in_turn_player.pieces)
-        if in_turn_player.should_insert_queen():
+        if not debug and in_turn_player.should_insert_queen():
             print("You should insert queen. because this is your 4'th turn!")
             piece = "QB"
         else:
@@ -55,7 +55,7 @@ while True:
         piece_obj.player = in_turn_player
         board.add_piece(pos, piece_obj, color)
     elif command == 'move':
-        if not in_turn_player.can_move():
+        if not debug and not in_turn_player.can_move():
             print('Your Queen is not in board!')
             continue
         x, y = map(int, input('insert x y to move it:\n').split())
@@ -72,11 +72,15 @@ while True:
             print('destination cell is not empty!')
             continue
         copy_of_board = board.copy()
-        copy_of_board.move(to_move_piece, (x, y), True)
-        if Board.is_connected(copy_of_board):
-            board.move(to_move_piece, (x, y), False)
-        else:
+        # copy_of_board.move(to_move_piece, (x, y), True)
+        x0, y0 = tuple(to_move_piece.pos.values())
+        board.move(to_move_piece, (x, y), False)
+        if not Board.is_connected(board):
             print("connectivity of hive is important!")
+            board.move(to_move_piece, (x0, y0), False)
+            # board.move(to_move_piece, (x, y), False)
+        # else:
+        #     print("connectivity of hive is important!")
     if p1.is_lost():
         print(f'player {p2.name} is won!')
         break
