@@ -92,5 +92,9 @@ class Piece:
 
         return output
 
+    def possible_movements(self):
+        pass
+
     def move(self):
         pass
+

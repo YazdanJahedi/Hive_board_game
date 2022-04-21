@@ -181,6 +181,7 @@ init_pieces_image()
 
 # Event loop
 running = True
+c = 0
 while running:
     # Background Color
     screen.fill((200, 230, 255))
@@ -198,5 +199,5 @@ while running:
             # print("mouse released on  ", x, y)
 
     show_board(x, y)
-    show_pieces()
+    #show_pieces()
     pygame.display.update()
