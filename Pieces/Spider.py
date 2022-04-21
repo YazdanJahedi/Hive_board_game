@@ -30,6 +30,4 @@ class Spider(Piece):
                             'y': n[1]
                         }
                         fake.board = self.board
-                    else:
-                        print()
                     self.bfs(fake, visited + [piece.pos], level + 1)
