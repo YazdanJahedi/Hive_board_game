@@ -2,4 +2,5 @@ from Pieces.Piece import Piece
 
 
 class Beetle(Piece):
-    pass
+    def possible_movements(self):
+        pass
