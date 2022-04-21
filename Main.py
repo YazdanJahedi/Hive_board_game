@@ -15,6 +15,7 @@ while True:
     in_turn_player = p1 if turn % 2 == 0 else p2
     color = 'Blue' if turn % 2 == 0 else 'Red'
     print(board)
+    print(f'it is {color} turn')
     command = input('move or insert?\n')
     if command == 'insert':
         print('You have these pieces:')
@@ -49,5 +50,11 @@ while True:
         to_move_piece = board.GAME_BOARD[x][y]
         print(f"possible destinations: {to_move_piece.possible_movements()}")
         x, y = map(int, input('enter destination x y:\n').split())
-        board.move(to_move_piece, (x, y))
+        copy_of_board = board.copy()
+        copy_of_board.move(to_move_piece, (x, y), True)
+        if Board.is_connected(copy_of_board):
+            board.move(to_move_piece, (x, y), False)
+        else:
+            print("connectivity of hive is important!")
+    # Board.is_connected(board)
     turn += 1
