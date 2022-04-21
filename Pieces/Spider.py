@@ -2,12 +2,14 @@ from Pieces.Piece import Piece
 
 
 class Spider(Piece):
+
+    def __init__(self, color):
+        super(Spider, self).__init__(color)
+        self.name = 'S'
+
     def possible_movements(self):
         self.output = set()
         self.bfs(self, [], 0)
-        for x, y in self.output:
-            self.board.GAME_BOARD[x][y] = 1
-        print(self.board)
         return self.output
 
     output = set()

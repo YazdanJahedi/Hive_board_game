@@ -2,6 +2,11 @@ from Pieces.Piece import Piece
 
 
 class Ant(Piece):
+
+    def __init__(self, color):
+        super(Ant, self).__init__(color)
+        self.name = 'A'
+
     def possible_movements(self):
         output = []
         open_list = []
