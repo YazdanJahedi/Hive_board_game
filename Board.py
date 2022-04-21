@@ -33,10 +33,6 @@ class Board:
         Board.GAME_BOARD[1][5] = 1
 
     def __str__(self, **kwargs):
-        # TODO: remove colored print
-        selects = kwargs.get('selects', {})
-        for piece, player in self.full_positions.items():
-            selects[(piece.pos['x'], piece.pos['y'])] = self.full_positions[piece]
         res = " "
         for j in range(Board.COLS):
             res += 3 * "_" + 5 * " "
