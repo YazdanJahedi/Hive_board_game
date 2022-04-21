@@ -34,6 +34,9 @@ class Board:
 
     def __str__(self, **kwargs):
         res = " "
+        for i in range(self.COLS):
+            res += ' ' +str(i * 2) + (7 - len(str(i * 2))) * ' '
+        res += '\n '
         for j in range(Board.COLS):
             res += 3 * "_" + 5 * " "
         res += "\n"
@@ -54,7 +57,7 @@ class Board:
 
                 res += "/" + piece_label + "\\" + 3 * "_"
 
-            res += "\n"
+            res += f"{i*2}\n"
 
             for j in range(Board.COLS):
                 piece_label = 3 * " "
