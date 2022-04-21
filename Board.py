@@ -1,5 +1,6 @@
 from Pieces.Piece import Piece
 
+
 class Board:
     ROWS = 10
     COLS = 10
@@ -12,17 +13,17 @@ class Board:
         self.full_positions = {}  # {tuple Piece -> player}
 
         # THIS IS JUST FOR TESTING THE BOARD CLASS
-        Board.GAME_BOARD[0][0] = 1
-        Board.GAME_BOARD[0][2] = 1
-        Board.GAME_BOARD[0][4] = 1
-        Board.GAME_BOARD[1][1] = 1
-        Board.GAME_BOARD[1][3] = 1
-        Board.GAME_BOARD[1][5] = 1
+        # Board.GAME_BOARD[0][0] = 1
+        # Board.GAME_BOARD[0][2] = 1
+        # Board.GAME_BOARD[0][4] = 1
+        # Board.GAME_BOARD[1][1] = 1
+        # Board.GAME_BOARD[1][3] = 1
+        # Board.GAME_BOARD[1][5] = 1
 
     def __str__(self, **kwargs):
         res = " "
         for i in range(self.COLS):
-            res += ' ' +str(i * 2) + (7 - len(str(i * 2))) * ' '
+            res += ' ' + str(i * 2) + (7 - len(str(i * 2))) * ' '
         res += '\n '
         for j in range(Board.COLS):
             res += 3 * "_" + 5 * " "
@@ -44,7 +45,7 @@ class Board:
 
                 res += "/" + piece_label + "\\" + 3 * "_"
 
-            res += f"{i*2}\n"
+            res += f"{i * 2}\n"
 
             for j in range(Board.COLS):
                 piece_label = 3 * " "
@@ -110,12 +111,14 @@ class Board:
     def move(self, piece, destination):
         source_x, source_y = piece.pos.values()
         dest_x, dest_y = destination
+        self.GAME_BOARD[source_x][source_y] = piece.bottom
+        if self.GAME_BOARD[dest_x][dest_y]:
+            piece.bottom = self.GAME_BOARD[dest_x][dest_y]
         self.GAME_BOARD[dest_x][dest_y] = piece
         piece.pos = {
             'x': dest_x,
             'y': dest_y
         }
-        self.GAME_BOARD[source_x][source_y] = None
 
 
 # -------------------------------

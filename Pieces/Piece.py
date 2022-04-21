@@ -9,6 +9,7 @@ class Piece:
         self.color = color
         self.board = None
         self.player = None
+        self.bottom = None
 
     def place(self, x, y):
         self.pos = {"x": x, "y": y}
@@ -82,7 +83,8 @@ class Piece:
             fake.pos = {'x': neighbor[0], 'y': neighbor[1]}
             fake.board = self.board
             not_null_neighbors = \
-                reduce(lambda before, n: before + [n] if isinstance(n,Piece) else before, fake.get_neighbors().values(), [])
+                reduce(lambda before, n: before + [n] if isinstance(n, Piece) else before,
+                       fake.get_neighbors().values(), [])
             if len(not_null_neighbors) == 1:
                 temp = not_null_neighbors.pop()
                 if temp.pos['x'] != base_piece.pos['x'] or temp.pos['y'] != base_piece.pos['y']:
