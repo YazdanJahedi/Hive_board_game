@@ -17,7 +17,7 @@ class Ant(Piece):
             this_pos = open_list.pop()
             output.append(tuple(this_pos.pos.values()))
             for n in this_pos.get_null_adjacent_neighbors(self):
-                if n not in visited:
+                if n not in visited and self.is_valid_slipping(tuple(this_pos.pos.values()), n):
                     fake = Piece('')
                     fake.pos = {'x': n[0], 'y': n[1]}
                     fake.board = self.board

@@ -10,6 +10,6 @@ class QueenBee(Piece):
     def possible_movements(self):
         output = set()
         for _, neighbor in self.get_neighbors().items():
-            if not isinstance(neighbor, Piece):
+            if not isinstance(neighbor, Piece) and self.is_valid_slipping(tuple(self.pos.values()), neighbor):
                 output.add(neighbor)
         return output
