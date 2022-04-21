@@ -41,6 +41,26 @@ while running:
     # screen base color RGB
     screen.fill((200, 230, 255))
 
+
+
+    # limit x in the page
+    if imgX <= 0:
+        imgX = 0
+    elif imgX >= 1000 - icon.get_height():
+        imgX = 1000 - icon.get_height()
+
+    # limit y in the page
+    if imgY <= 0:
+        imgY = 0
+    elif imgY >= 600 - icon.get_width():
+        imgY = 600 - icon.get_width()
+
+    imgX += imgX_changer
+    imgY += imgY_changer
+    img_display(imgX, imgY)
+    show_text(textX, textY)
+    pygame.display.update()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -64,22 +84,16 @@ while running:
             imgX_changer = 0
             imgY_changer = 0
 
-    # limit x in the page
-    if imgX <= 0:
-        imgX = 0
-    elif imgX >= 1000 - icon.get_height():
-        imgX = 1000 - icon.get_height()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = event.pos
+            print("mouse down", x, y)
+            if img.get_rect().collidepoint(x, y):
+                print("~ ~ image is clicked")
+        if event.type == pygame.MOUSEBUTTONUP:
+            x, y = event.pos
+            print("mouse up", x, y)
+            if img.get_rect().collidepoint(x, y):
+                print("~ ~ image is clicked")
 
-    # limit y in the page
-    if imgY <= 0:
-        imgY = 0
-    elif imgY >= 600 - icon.get_width():
-        imgY = 600 - icon.get_width()
-
-    imgX += imgX_changer
-    imgY += imgY_changer
-    img_display(imgX, imgY)
-    show_text(textX, textY)
-    pygame.display.update()
 
 # 30:00
