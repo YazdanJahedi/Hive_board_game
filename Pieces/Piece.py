@@ -94,5 +94,8 @@ class Piece:
 
         return output
 
+    def get_not_null_neighbors(self):
+        return filter(lambda x: isinstance(x, Piece), self.get_neighbors().values())
+
     def move(self):
         pass
