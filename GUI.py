@@ -265,12 +265,18 @@ while running:
         if not debug and board.GAME_BOARD[x][y]:
             print('destination cell is not empty!')
             continue
-        copy_of_board = board.copy()
-        copy_of_board.move(to_move_piece, (x, y), True)
-        if Board.is_connected(copy_of_board):
-            board.move(to_move_piece, (x, y), False)
-        else:
+        # copy_of_board = board.copy()
+        # copy_of_board.move(to_move_piece, (x, y), True)
+        # if Board.is_connected(copy_of_board):
+        #     board.move(to_move_piece, (x, y), False)
+        # else:
+        #     print("connectivity of hive is important!")
+        x0, y0 = tuple(to_move_piece.pos.values())
+        board.move(to_move_piece, (x, y), False)
+        if not Board.is_connected(board):
             print("connectivity of hive is important!")
+            board.move(to_move_piece, (x0, y0), False)
+
     if p1.is_lost():
         print(f'player {p2.name} is won!')
         break

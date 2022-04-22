@@ -118,7 +118,7 @@ class Piece:
                 return False
         if dst_pos[0] - src_pos[0] == +1 and dst_pos[1] - src_pos[1] == +1:
             # \.
-            if self.board.GAME_BOARD[dst_pos[0] - 2][dst_pos[1]] and self.board.GAME_BOARD[dst_pos[0] - 1][
+            if self.board.GAME_BOARD[dst_pos[0] + 2][dst_pos[1]] and self.board.GAME_BOARD[dst_pos[0] + 1][
                 dst_pos[1] - 1]:
                 return False
         if dst_pos[0] - src_pos[0] == +1 and dst_pos[1] - src_pos[1] == -1:
@@ -126,9 +126,9 @@ class Piece:
             if self.board.GAME_BOARD[dst_pos[0] - 2][dst_pos[1]] and self.board.GAME_BOARD[dst_pos[0] + 1][
                 dst_pos[1] + 1]:
                 return False
-        if dst_pos[0] - src_pos[0] == +1 and dst_pos[1] - src_pos[1] == -1:
+        if dst_pos[0] - src_pos[0] == -1 and dst_pos[1] - src_pos[1] == +1:
             # /'
-            if self.board.GAME_BOARD[src_pos[0] - 2][src_pos[1]] and self.board.GAME_BOARD[src_pos[0] + 1][
-                src_pos[1] + 1]:
+            if self.board.GAME_BOARD[dst_pos[0] + 2][dst_pos[1]] and self.board.GAME_BOARD[dst_pos[0] - 1][
+                dst_pos[1] - 1]:
                 return False
         return True
