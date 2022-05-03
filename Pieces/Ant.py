@@ -7,7 +7,7 @@ class Ant(Piece):
         super(Ant, self).__init__(color)
         self.name = 'A'
 
-    def possible_movements(self):
+    def get_possible_movements(self):
         output = []
         open_list = []
         visited = []
@@ -16,7 +16,7 @@ class Ant(Piece):
         while len(open_list) != 0:
             this_pos = open_list.pop()
             output.append(tuple(this_pos.pos.values()))
-            for n in this_pos.get_null_adjacent_neighbors(self):
+            for n in this_pos.get_null_neighbours_pos(self):
                 if n not in visited and self.is_valid_slipping(tuple(this_pos.pos.values()), n):
                     fake = Piece('')
                     fake.pos = {'x': n[0], 'y': n[1]}

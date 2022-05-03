@@ -7,7 +7,7 @@ class Spider(Piece):
         super(Spider, self).__init__(color)
         self.name = 'S'
 
-    def possible_movements(self):
+    def get_possible_movements(self):
         self.output = set()
         self.bfs(self, [], 0)
         return self.output
@@ -18,7 +18,7 @@ class Spider(Piece):
         if level == 3 and piece.pos not in visited:
             self.output.add(tuple(piece.pos.values()))
         else:
-            for n in piece.get_null_adjacent_neighbors(self):
+            for n in piece.get_null_neighbours_pos(self):
                 if piece.pos not in visited and self.is_valid_slipping(tuple(piece.pos.values()),
                                                                        n if not isinstance(n, Piece) else tuple(
                                                                                n.pos.values())):

@@ -7,18 +7,11 @@ class Board:
     GAME_BOARD = []
 
     def __init__(self):
-        for i in range(2 * Board.ROWS):
-            Board.GAME_BOARD.append([None] * 2 * Board.COLS)
-
         self.full_positions = {}  # {tuple Piece -> player}
 
-        # THIS IS JUST FOR TESTING THE BOARD CLASS
-        # Board.GAME_BOARD[0][0] = 1
-        # Board.GAME_BOARD[0][2] = 1
-        # Board.GAME_BOARD[0][4] = 1
-        # Board.GAME_BOARD[1][1] = 1
-        # Board.GAME_BOARD[1][3] = 1
-        # Board.GAME_BOARD[1][5] = 1
+        # creating the GAME_BOARD
+        for i in range(2 * Board.ROWS):
+            Board.GAME_BOARD.append([None] * 2 * Board.COLS)
 
     def __str__(self, **kwargs):
         res = " "
@@ -81,10 +74,10 @@ class Board:
         if len(self.full_positions) == 0:
             return {(self.ROWS - 1, self.COLS - 1)}
         if len(self.full_positions) == 1:
-            return set(k for k in list(self.full_positions.keys())[0].get_neighbors().values() if k is not None)
+            return set(k for k in list(self.full_positions.keys())[0].get_all_neighbours().values() if k is not None)
         output = set()  # set of tuples of positions
         for piece, _ in self.full_positions.items():
-            neighbors = piece.get_neighbors()
+            neighbors = piece.get_all_neighbours()
             for neighbor in neighbors.values():
                 # neighbor is tuple of x,y if None else Piece
                 if isinstance(neighbor, Piece):
@@ -95,7 +88,7 @@ class Board:
                 fake_piece.pos['x'] = neighbor[0]
                 fake_piece.pos['y'] = neighbor[1]
                 fake_piece.board = self
-                if not self.contains_enemy(fake_piece.get_neighbors().values(), player):
+                if not self.contains_enemy(fake_piece.get_all_neighbours().values(), player):
                     output.add(neighbor)
         return output
 
@@ -103,7 +96,8 @@ class Board:
         self.GAME_BOARD[pos[0]][pos[1]] = piece
         self.full_positions[piece] = color
 
-    def is_position_in_board(self, position):
+    # This method returns a boolean determine if a position in in the board or not
+    def is_in_board(self, position):
         return 0 <= position[0] < self.ROWS * 2 and 0 <= position[1] < self.COLS * 2
 
     def move(self, piece, destination, to_test_move):

@@ -7,7 +7,7 @@ class Grasshopper(Piece):
         super(Grasshopper, self).__init__(color)
         self.name = 'G'
 
-    def possible_movements(self):
+    def get_possible_movements(self):
         output = set()
 
         piece_ptr = self.get_ne()

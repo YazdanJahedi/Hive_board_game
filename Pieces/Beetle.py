@@ -7,6 +7,6 @@ class Beetle(Piece):
         super(Beetle, self).__init__(color)
         self.name = 'B'
 
-    def possible_movements(self):
+    def get_possible_movements(self):
         return {neighbor if isinstance(neighbor, tuple) else tuple(neighbor.pos.values())
-                for neighbor in filter(lambda x: not isinstance(x, str), self.get_neighbors().values())}
+                for neighbor in filter(lambda x: not isinstance(x, str), self.get_all_neighbours().values())}

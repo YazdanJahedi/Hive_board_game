@@ -6,37 +6,92 @@ from Pieces.Beetle import Beetle
 from Pieces.Grasshopper import Grasshopper
 from Pieces.QueenBee import QueenBee
 from Pieces.Spider import Spider
-
-# Initialise pygame
 from Player import Player
 
+# _ _ - - - ~ ~ ~ ~ ^ ^ ^ NONE GRAPHICAL METHODS AND PROPERTIES ^ ^ ^ ~ ~ ~ ~ - - - _ _
+# an instance of the Board class
+board = Board()
+board_rows = Board().ROWS
+board_cols = Board().COLS
+
+turn = 0
+p1 = Player("P1", "White")
+p2 = Player("P2", "Black")
+debug = True
+
+
+def create_piece_instance(piece_name, color):
+    piece_instance = None
+    if piece_name == 'QB':
+        piece_instance = QueenBee(color)
+        in_turn_player.queen_bee = piece_instance
+    elif piece_name == 'S':
+        piece_instance = Spider(color)
+    elif piece_name == 'B':
+        piece_instance = Beetle(color)
+    elif piece_name == 'G':
+        piece_instance = Grasshopper(color)
+    elif piece_name == 'A':
+        piece_instance = Ant(color)
+    # TODO: else: if the piece_name was incorrect...
+    piece_instance.board = board
+
+    return piece_instance
+
+
+# _ _ - - - ~ ~ ~ ~ ~ ^ ^ ^ GRAPHICAL METHODS AND PROPERTIES ^ ^ ^ ~ ~ ~ ~ ~ - - - _ _
+# Initialise pygame
 pygame.init()
 
 # Set screen size
 screen_size = screen_width, screen_height = (1100, 650)
 screen = pygame.display.set_mode(screen_size)
 
-# Title and icon
+# set title and icon for the graphical screen
 pygame.display.set_caption("Hive Game-Board")
 game_icon = pygame.image.load("images/queen_bee_icon.png")
 pygame.display.set_icon(game_icon)
 
-# -------------------------------
-board = Board()
-board_rows = Board().ROWS
-board_cols = Board().COLS
-
-# Set the size for the image
+# Set the default size for the images
 DEFAULT_CELL_SIZE = cell_width, cell_height = (50, 50)
 
-current_x = 0
-current_y = 0
+
+def choose_image_for_cell(element):
+    # default image of each cell
+    cell_image = pygame.image.load("images/Hexagonal.png")
+
+    if element == 1:
+        cell_image = pygame.image.load("images/Hexagonal_blue.png")
+    elif isinstance(element, Ant):
+        if element.color[0] == 'W':
+            cell_image = pygame.image.load("images/ant_white.png")
+        else:
+            cell_image = pygame.image.load("images/ant_black.png")
+    elif isinstance(element, Beetle):
+        if element.color[0] == 'W':
+            cell_image = pygame.image.load("images/insect_white.png")
+        else:
+            cell_image = pygame.image.load("images/insect_black.png")
+    elif isinstance(element, Grasshopper):
+        if element.color[0] == 'W':
+            cell_image = pygame.image.load("images/grasshopper_white.png")
+        else:
+            cell_image = pygame.image.load("images/grasshopper_black.png")
+    elif isinstance(element, QueenBee):
+        if element.color[0] == 'W':
+            cell_image = pygame.image.load("images/queen_bee_white.png")
+        else:
+            cell_image = pygame.image.load("images/queen_bee_black.png")
+    elif isinstance(element, Spider):
+        if element.color[0] == 'W':
+            cell_image = pygame.image.load("images/spider_white.png")
+        else:
+            cell_image = pygame.image.load("images/spider_black.png")
+
+    return cell_image
 
 
-def show_board(x, y):
-    is_an_image_clicked = False
-
-    global current_y, current_x
+def show_board():
     current_x = 0
     current_y = 0
     for i in range(2 * board_rows):
@@ -46,78 +101,28 @@ def show_board(x, y):
             current_x = 38  # TODO: this number is better to be calculated!
 
         for j in range(board_cols):
-            # loading image
-            # default image of each cell
-            cell_image = pygame.image.load("images/Hexagonal.png")
 
-            # ------------ select correct image for each element -----------
             element = None
             if i % 2 == 0:
                 element = board.GAME_BOARD[i][2 * j]
             else:
                 element = board.GAME_BOARD[i][2 * j + 1]
 
-            if element == 1:
-                cell_image = pygame.image.load("images/Hexagonal_blue.png")
-            elif isinstance(element, Ant):
-                if element.color[0] == 'W':
-                    cell_image = pygame.image.load("images/ant_white.png")
-                else:
-                    cell_image = pygame.image.load("images/ant_black.png")
-            elif isinstance(element, Beetle):
-                if element.color[0] == 'W':
-                    cell_image = pygame.image.load("images/insect_white.png")
-                else:
-                    cell_image = pygame.image.load("images/insect_black.png")
-            elif isinstance(element, Grasshopper):
-                if element.color[0] == 'W':
-                    cell_image = pygame.image.load("images/grasshopper_white.png")
-                else:
-                    cell_image = pygame.image.load("images/grasshopper_black.png")
-            elif isinstance(element, QueenBee):
-                if element.color[0] == 'W':
-                    cell_image = pygame.image.load("images/queen_bee_white.png")
-                else:
-                    cell_image = pygame.image.load("images/queen_bee_black.png")
-            elif isinstance(element, Spider):
-                if element.color[0] == 'W':
-                    cell_image = pygame.image.load("images/spider_white.png")
-                else:
-                    cell_image = pygame.image.load("images/spider_black.png")
-            # -------------------------------------------------------------------
+            cell_image = choose_image_for_cell(element)
 
-            # Scale the image
+            # Scale the image based on default image size
             cell_image = pygame.transform.scale(cell_image, DEFAULT_CELL_SIZE)
             screen.blit(cell_image, (current_x, current_y))
-
-            if cell_image.get_rect().collidepoint(x, y):
-                print(" ~~~~")
-                is_an_image_clicked = True
 
             current_x += (3 / 2) * cell_width
         current_y += cell_height / 2
 
-    if is_an_image_clicked:
-        print("** clicked on cell at ", x, y)
 
-
+# THIS PART NEEDS MORE FOCUS! NOT COMPLETED
+'''
 # index: queen_bee  /  spider  /  ant  /  grasshopper  /  beetle
 white_pieces_image = []
 black_pieces_image = []
-
-'''
-def is_clicked_on_pieces(x, y):
-    for i in white_pieces_image:
-        if i.get_rect().collidepoint(x, y):
-            print("     White Piece", i)
-            break
-
-    for i in black_pieces_image:
-        if i.get_rect().collidepoint(x, y):
-            print("     Black Piece", i)
-            break
-'''
-
 
 def init_pieces_image():
     # load image
@@ -176,68 +181,51 @@ def show_pieces():
         screen.blit(i, (starting_x, starting_y))
         starting_x += 60
 
-
-# -------------------------------
 init_pieces_image()
+'''
 
-turn = 0
-p1 = Player("P1", "White")
-p2 = Player("P2", "Black")
-debug = True
 # Event loop
 running = True
 while running:
-    # Background Color
-    print("1")
+    # -------------- graphical part --------------
+    #  set background color
     screen.fill((200, 230, 255))
-    x, y = (-10, -10)
 
-    show_board(x, y)
-    # show_pieces()
+    # shoe the game board and update the display to show recent changes
+    show_board()
     pygame.display.update()
-    print("2")
+
     for event in pygame.event.get():
         # Close window event
         if event.type == pygame.QUIT:
             running = False
-        # if event.type == pygame.MOUSEBUTTONDOWN:
-        #    x, y = event.pos
-        # print("clicked on ", x, y)
-        # if event.type == pygame.MOUSEBUTTONUP:
-        #    x, y = event.pos
-        # print("mouse released on  ", x, y)
-    print("3")
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # determine players turn and color
     in_turn_player = p1 if turn % 2 == 0 else p2
     color = 'White' if turn % 2 == 0 else 'Black'
+
     print(board)
-    print(f'it is {color} turn')
-    command = input('move or insert?\n')
+    print(f"it is {color}'s turn")
+
+    command = input('move or insert? ')
     if command == 'insert':
         print('You have these pieces:')
         print(in_turn_player.pieces)
         if in_turn_player.should_insert_queen():
             print("You should insert queen. because this is your 4'th turn!")
-            piece = "QB"
+            piece_name = "QB"
         else:
-            piece = input('Choose one exist piece with enter id. ex) QB\n')
-        piece_num = in_turn_player.pieces.get(piece, -1)
+            piece_name = input('Choose one exist piece with enter id. ex) QB\n')
+        piece_num = in_turn_player.pieces.get(piece_name, -1)
         if piece_num <= 0:
             print("You don't have this piece")
             continue
-        piece_obj = None
-        if piece == 'QB':
-            piece_obj = QueenBee(color)
-            in_turn_player.queen = piece_obj
-        elif piece == 'S':
-            piece_obj = Spider(color)
-        elif piece == 'B':
-            piece_obj = Beetle(color)
-        elif piece == 'G':
-            piece_obj = Grasshopper(color)
-        elif piece == 'A':
-            piece_obj = Ant(color)
-        piece_obj.board = board
-        in_turn_player.pieces[piece] = piece_num - 1
+
+        # piece_obj will be an instance of the selected piece with proper color
+        piece_obj = create_piece_instance(piece_name, color)
+
+        in_turn_player.pieces[piece_name] = piece_num - 1
         print(board.get_possible_insertions(in_turn_player))
         # validate pos
         pos = list(map(int, input('enter position in form of x y. ex) 5 4\n').split()))
@@ -260,31 +248,29 @@ while running:
             print('this piece is not yours!')
             continue
         to_move_piece = board.GAME_BOARD[x][y]
-        print(f"possible destinations: {to_move_piece.possible_movements()}")
+        print(f"possible destinations: {to_move_piece.get_possible_movements()}")
         x, y = map(int, input('enter destination x y:\n').split())
         if not debug and board.GAME_BOARD[x][y]:
             print('destination cell is not empty!')
             continue
-        # copy_of_board = board.copy()
-        # copy_of_board.move(to_move_piece, (x, y), True)
-        # if Board.is_connected(copy_of_board):
-        #     board.move(to_move_piece, (x, y), False)
-        # else:
-        #     print("connectivity of hive is important!")
+
         x0, y0 = tuple(to_move_piece.pos.values())
         board.move(to_move_piece, (x, y), False)
         if not Board.is_connected(board):
             print("connectivity of hive is important!")
             board.move(to_move_piece, (x0, y0), False)
+    else:
+        print("ERROR: incorrect command")
+        continue
 
+    # check if each player is lost or not!
     if p1.is_lost():
         print(f'player {p2.name} is won!')
         break
     elif p2.is_lost():
         print(f'player {p1.name} is won!')
         break
-    # Board.is_connected(board)
+
+    # update turn's number
     turn += 1
     in_turn_player.turn += 1
-
-

@@ -1,3 +1,4 @@
+'''
 from Board import Board
 from Pieces.Ant import Ant
 from Pieces.Beetle import Beetle
@@ -33,7 +34,7 @@ while True:
         piece_obj = None
         if piece == 'QB':
             piece_obj = QueenBee(color)
-            in_turn_player.queen = piece_obj
+            in_turn_player.queen_bee = piece_obj
         elif piece == 'S':
             piece_obj = Spider(color)
         elif piece == 'B':
@@ -66,7 +67,7 @@ while True:
             print('this piece is not yours!')
             continue
         to_move_piece = board.GAME_BOARD[x][y]
-        print(f"possible destinations: {to_move_piece.possible_movements()}")
+        print(f"possible destinations: {to_move_piece.get_possible_movements()}")
         x, y = map(int, input('enter destination x y:\n').split())
         if not debug and board.GAME_BOARD[x][y]:
             print('destination cell is not empty!')
@@ -90,3 +91,4 @@ while True:
     # Board.is_connected(board)
     turn += 1
     in_turn_player.turn += 1
+'''
