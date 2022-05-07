@@ -4,7 +4,6 @@ from functools import reduce
 class Piece:
     def __init__(self, color):
         self.name = 'piece'
-        self.number_of_pieces = -1
         self.pos = {'x': -1, 'y': -1}
         self.color = color
         self.board = None
