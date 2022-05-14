@@ -21,6 +21,7 @@ debug = True
 
 
 def create_piece_instance(piece_name, color):
+    global p1,p2
     piece_instance = None
     if piece_name == 'QB':
         piece_instance = QueenBee(color)
@@ -35,6 +36,12 @@ def create_piece_instance(piece_name, color):
         piece_instance = Ant(color)
     # TODO: else: if the piece_name was incorrect...
     piece_instance.board = board
+
+    # adding new pieces to the list of each player
+    if p1.color == color:
+        p1.inserted_pieces.append(piece_instance)
+    else:
+        p2.inserted_pieces.append(piece_instance)
 
     return piece_instance
 
@@ -189,11 +196,11 @@ running = True
 while running:
     # -------------- graphical part --------------
     #  set background color
-    screen.fill((200, 230, 255))
+    # screen.fill((200, 230, 255))
 
     # shoe the game board and update the display to show recent changes
-    show_board()
-    pygame.display.update()
+    # show_board()
+    # pygame.display.update()
 
     for event in pygame.event.get():
         # Close window event
@@ -209,7 +216,7 @@ while running:
     print(f"it is {color}'s turn")
 
     command = input('move or insert? ')
-    if command == 'insert':
+    if command == 'i':
         print('You have these pieces:')
         print(in_turn_player.pieces)
         if in_turn_player.should_insert_queen():
@@ -236,7 +243,7 @@ while running:
         piece_obj.pos['y'] = pos[1]
         piece_obj.player = in_turn_player
         board.add_piece(pos, piece_obj, color)
-    elif command == 'move':
+    elif command == 'm':
         if not in_turn_player.can_move():
             print('Your Queen is not in board!')
             continue
@@ -259,6 +266,7 @@ while running:
         if not Board.is_connected(board):
             print("connectivity of hive is important!")
             board.move(to_move_piece, (x0, y0), False)
+            continue
     else:
         print("ERROR: incorrect command")
         continue

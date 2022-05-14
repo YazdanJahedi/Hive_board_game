@@ -13,6 +13,7 @@ class Player:
         self.score = 0
         self.color = color
         self.queen_bee = None
+        self.inserted_pieces = []
 
     # when all cells beside the queen be is filled, player is lost!
     def is_lost(self):

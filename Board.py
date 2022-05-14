@@ -105,8 +105,8 @@ class Board:
         dest_x, dest_y = destination
         self.GAME_BOARD[source_x][source_y] = piece.bottom
         if not to_test_move:
-            if self.GAME_BOARD[dest_x][dest_y]:
-                piece.bottom = self.GAME_BOARD[dest_x][dest_y]
+            # if self.GAME_BOARD[dest_x][dest_y]:
+            piece.bottom = self.GAME_BOARD[dest_x][dest_y]
         if not to_test_move:
             self.GAME_BOARD[dest_x][dest_y] = piece
         else:
