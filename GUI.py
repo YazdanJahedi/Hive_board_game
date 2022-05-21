@@ -8,6 +8,7 @@ from Pieces.QueenBee import QueenBee
 from Pieces.Spider import Spider
 from Player import Player
 
+
 # _ _ - - - ~ ~ ~ ~ ^ ^ ^ NONE GRAPHICAL METHODS AND PROPERTIES ^ ^ ^ ~ ~ ~ ~ - - - _ _
 # an instance of the Board class
 board = Board()
