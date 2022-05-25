@@ -10,7 +10,7 @@ class Spider(Piece):
     def get_possible_movements(self):
         self.output = set()
         self.bfs(self, [], 0)
-        return self.output
+        return self.board.filter_valid_moves(self, self.output)
 
     output = set()
 

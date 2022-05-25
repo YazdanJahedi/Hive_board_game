@@ -12,4 +12,4 @@ class QueenBee(Piece):
         for _, neighbor in self.get_all_neighbours().items():
             if not isinstance(neighbor, Piece) and self.is_valid_slipping(tuple(self.pos.values()), neighbor):
                 output.add(neighbor)
-        return output
+        return self.board.filter_valid_moves(self, output)
