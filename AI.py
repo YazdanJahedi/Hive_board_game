@@ -1,20 +1,19 @@
 # This file provides some functions for AI part of the game
-from Board import Board
+
 from Pieces.Ant import Ant
 from Pieces.Beetle import Beetle
 
+""""
 # This function provides an estimated heuristic for the game.
 # Using this method, minMax tree can be used in an efficient way!
 from Pieces.Piece import Piece
-
-""""
 This function calculates heuristic for the player1.
 So we should maximize heuristic for player1
 and minimize for player2
 """
 
 
-def get_heuristic(board, player1, player2, turn):
+def get_heuristic(board, player1, player2):
     h = 0
 
     # if player 1 is won the h is the biggest possible number
@@ -29,6 +28,11 @@ def get_heuristic(board, player1, player2, turn):
         h += 30
     if is_queen_bee_inserted(player1):
         h += 120
+    if can_bee_queen_move(board, player1):
+        h += 170
+
+    # todo : beetle on beetle ??
+    # todo : number of neighbours of queen bee ??
 
     h += 50 * get_number_of_inserted_ants(player1)
     h += 100 * get_number_of_locked_pieces(board, player2)
@@ -37,6 +41,8 @@ def get_heuristic(board, player1, player2, turn):
         h -= 30
     if is_queen_bee_inserted(player2):
         h -= 120
+    if can_bee_queen_move(board, player2):
+        h -= 170
 
     h -= 50 * get_number_of_inserted_ants(player2)
     h -= 100 * get_number_of_locked_pieces(board, player1)
@@ -88,3 +94,10 @@ def get_number_of_locked_pieces(board, player):
         if is_piece_a_bridge(board, i):
             n += 1
     return n
+
+
+# This function checks if queen bee piece can move or not
+def can_bee_queen_move(board, player):
+    if not is_queen_bee_inserted(player) or is_piece_a_bridge(board, player.queen_bee):
+        return False
+    return True
