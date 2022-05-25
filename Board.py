@@ -144,9 +144,11 @@ class Board:
                 if n not in visited:
                     visited.add(n)
                     open_list.append(n)
-        print("nodes count: ", len(temp_board.full_positions.values()))
-        print("visited: ", len(visited))
-        return len(visited) == len(temp_board.full_positions.values())
+        covered_cells = {tuple(key.pos.values()) for key, _ in temp_board.full_positions.items()}
+        print("nodes count: ", len(covered_cells))
+        covered_and_visited_cells = {tuple(piece.pos.values()) for piece in visited}
+        print("visited: ", len(covered_and_visited_cells))
+        return len(covered_and_visited_cells) == len(covered_cells)
 
     def filter_valid_moves(self, piece: Piece, dest_poses: set):
         output = dest_poses.copy()
