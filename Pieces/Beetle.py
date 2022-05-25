@@ -8,5 +8,7 @@ class Beetle(Piece):
         self.name = 'B'
 
     def get_possible_movements(self):
-        return {neighbor if isinstance(neighbor, tuple) else tuple(neighbor.pos.values())
-                for neighbor in filter(lambda x: not isinstance(x, str), self.get_all_neighbours().values())}
+        return self.board.filter_valid_moves(self,
+                                             {neighbor if isinstance(neighbor, tuple) else tuple(neighbor.pos.values())
+                                              for neighbor in filter(lambda x: not isinstance(x, str),
+                                                                     self.get_all_neighbours().values())})

@@ -64,4 +64,4 @@ class Grasshopper(Piece):
             if piece_ptr != "ERROR":
                 output.add(piece_ptr.get_se_pos())
 
-        return output
+        return self.board.filter_valid_moves(self,output)

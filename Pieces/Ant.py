@@ -24,4 +24,4 @@ class Ant(Piece):
                     visited.append(n)
                     open_list.append(fake)
         output.remove(tuple(self.pos.values()))
-        return output
+        return self.board.filter_valid_moves(self, output)
