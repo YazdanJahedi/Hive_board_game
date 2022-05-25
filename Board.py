@@ -148,6 +148,16 @@ class Board:
         print("visited: ", len(visited))
         return len(visited) == len(temp_board.full_positions.values())
 
+    def filter_valid_moves(self, piece: Piece, dest_poses: set):
+        output = dest_poses.copy()
+        for dest in dest_poses:
+            source_x, source_y = piece.pos.values()
+            self.move(piece, dest, False)
+            if not Board.is_connected(self):
+                output.remove(dest)
+            self.move(piece, (source_x, source_y), False)
+        return output
+
 
 # -------------------------------
 if __name__ == '__main__':
