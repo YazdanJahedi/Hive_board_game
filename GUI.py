@@ -8,7 +8,6 @@ from Pieces.QueenBee import QueenBee
 from Pieces.Spider import Spider
 from Player import Player
 
-
 # _ _ - - - ~ ~ ~ ~ ^ ^ ^ NONE GRAPHICAL METHODS AND PROPERTIES ^ ^ ^ ~ ~ ~ ~ - - - _ _
 # an instance of the Board class
 board = Board()
@@ -21,8 +20,8 @@ p2 = Player("P2", "Black")
 debug = True
 
 
-def create_piece_instance(piece_name, color):
-    global p1,p2
+def create_piece_instance(piece_name, color, pos, player):
+    global p1, p2
     piece_instance = None
     if piece_name == 'QB':
         piece_instance = QueenBee(color)
@@ -43,7 +42,8 @@ def create_piece_instance(piece_name, color):
         p1.inserted_pieces.append(piece_instance)
     else:
         p2.inserted_pieces.append(piece_instance)
-
+    piece_instance.pos = pos
+    piece_obj.player = player
     return piece_instance
 
 
@@ -231,7 +231,6 @@ while running:
             continue
 
         # piece_obj will be an instance of the selected piece with proper color
-        piece_obj = create_piece_instance(piece_name, color)
 
         in_turn_player.pieces[piece_name] = piece_num - 1
         print(board.get_possible_insertions(in_turn_player))
@@ -240,14 +239,13 @@ while running:
         if not debug and board.GAME_BOARD[pos[0]][pos[1]]:
             print('destination cell is not empty!')
             continue
-        piece_obj.pos['x'] = pos[0]
-        piece_obj.pos['y'] = pos[1]
-        piece_obj.player = in_turn_player
+        piece_obj = create_piece_instance(piece_name, color, {'x': pos[0], 'y': pos[1]}, in_turn_player)
         board.add_piece(pos, piece_obj, color)
     elif command == 'm':
         if not in_turn_player.can_move():
             print('Your Queen is not in board!')
             continue
+        print(board.get_move_sources(in_turn_player))
         x, y = map(int, input('insert x y to move it:\n').split())
         if not board.GAME_BOARD[x][y]:
             print('source cell is empty!')
@@ -262,12 +260,10 @@ while running:
             print('destination cell is not empty!')
             continue
 
-        x0, y0 = tuple(to_move_piece.pos.values())
-        board.move(to_move_piece, (x, y), False)
-        if not Board.is_connected(board):
+        if not board.move_if_can(to_move_piece, (x, y)):
             print("connectivity of hive is important!")
-            board.move(to_move_piece, (x0, y0), False)
             continue
+
     else:
         print("ERROR: incorrect command")
         continue
