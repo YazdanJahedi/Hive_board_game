@@ -151,3 +151,14 @@ class Piece:
 
     def get_possible_movements(self):
         pass
+
+    def copy(self, board, this_player, that_player):
+        output = Piece(self.color)
+        output.place(*list(self.pos.values()))
+        output.name = self.name
+        output.player = this_player
+        output.board = board
+        if self.bottom is not None:
+            output.bottom = self.copy(board,that_player,this_player)
+
+        return output

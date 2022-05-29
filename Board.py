@@ -6,7 +6,7 @@ class Board:
     ROWS = 10
     COLS = 10
 
-    def __init__(self, board=None, full_positions=None):
+    def __init__(self, p1, p2, board=None, full_positions=None):
         self.full_positions = {}  # {tuple Piece -> player}
         self.GAME_BOARD = []
 
@@ -17,7 +17,11 @@ class Board:
         if board is not None:
             self.GAME_BOARD = copy.deepcopy(board)
         if full_positions is not None:
-            self.full_positions = copy.deepcopy(full_positions)
+            new_full_pos = {}
+            for piece, player in self.full_positions.items():
+                pass
+                # TODO: resolve copy problems
+                # new_full_pos[piece.copy(self.GAME_BOARD, p1.copy(), p2.copy())] = player
 
     def __str__(self, **kwargs):
         res = " "
@@ -176,10 +180,6 @@ class Board:
                 output.remove(dest)
             self.move(piece, (source_x, source_y))
         return output
-
-
-def make_tree():
-    pass
 
 
 # -------------------------------

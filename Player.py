@@ -30,3 +30,24 @@ class Player:
     # Player should insert queen be piece upto 4th turn
     def should_insert_queen(self):
         return self.turn == 4 and self.queen_bee is None
+
+    def get_valid_pieces(self):
+        if self.should_insert_queen():
+            return ['QB']
+        return list(filter(lambda key_val: key_val[1] > 0, self.pieces))
+
+    def copy(self, inserted_pieces, queen_bee):
+        output = Player(self.name, self.color)
+        self.pieces = {
+            'QB': 1,
+            'S': 2,
+            'B': 2,
+            'G': 3,
+            'A': 3,
+        }
+        self.turn = output.turn
+        self.is_won = False
+        self.score = output.score
+        self.queen_bee = queen_bee
+        self.inserted_pieces = inserted_pieces
+        return output
