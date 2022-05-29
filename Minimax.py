@@ -1,17 +1,22 @@
 import sys
 
+import Board
+
 
 class Node:
-    state = None
     score = 0
     level = 0
     alpha = -sys.maxsize
     beta = sys.maxsize
     children = []
 
+    def __init__(self, state:Board.Board=None):
+        self.state = state  # from Board Material
+
     def add_child(self, child):
         self.children.append(child)
         child.level = self.level + 1
+
         if child.level % 2 == 0:
             child.score = sys.maxsize
         else:
@@ -38,5 +43,3 @@ class MinimaxTree:
                         node.beta = node.score
             if node.beta <= node.alpha:
                 return node.score
-
-
