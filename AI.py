@@ -19,7 +19,7 @@ class AI:
     def __init__(self, player):
         self.player = player
 
-    def get_heuristic(self, board, player1, player2):
+    def get_heuristic(self, board, player1, player2, ratio=(30, 120, 170, 50, 100)):
         h = 0
 
         # if player 1 is won the h is the biggest possible number
@@ -31,27 +31,27 @@ class AI:
             return h
 
         if self.get_number_of_inserted_beetles(player1) != 0:
-            h += 30
+            h += ratio[0]
         if self.is_queen_bee_inserted(player1):
-            h += 120
+            h += ratio[1]
         if self.can_bee_queen_move(board, player1):
-            h += 170
+            h += ratio[2]
 
         # todo : beetle on beetle ??
         # todo : number of neighbours of queen bee ??
 
-        h += 50 * self.get_number_of_inserted_ants(player1)
-        h += 100 * self.get_number_of_locked_pieces(board, player2)
+        h += ratio[3] * self.get_number_of_inserted_ants(player1)
+        h += ratio[4] * self.get_number_of_locked_pieces(board, player2)
         # _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
         if self.get_number_of_inserted_beetles(player2) != 0:
-            h -= 30
+            h -= ratio[0]
         if self.is_queen_bee_inserted(player2):
-            h -= 120
+            h -= ratio[1]
         if self.can_bee_queen_move(board, player2):
-            h -= 170
+            h -= ratio[2]
 
-        h -= 50 * self.get_number_of_inserted_ants(player2)
-        h -= 100 * self.get_number_of_locked_pieces(board, player1)
+        h -= ratio[3] * self.get_number_of_inserted_ants(player2)
+        h -= ratio[4] * self.get_number_of_locked_pieces(board, player1)
 
         return h
 
